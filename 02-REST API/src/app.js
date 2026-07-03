@@ -8,7 +8,7 @@ const notes = [];
 // Jo Data aa Raha hai usko User read nahi kar sakta is liye Data ko JSON() format main conver karna padta hai!
 app.use(express.json());
 
-
+// POST /notes!
 app.post('/notes', (req, res) => {
     notes.push(req.body);
 
@@ -17,6 +17,7 @@ app.post('/notes', (req, res) => {
     });
 });
 
+// GET /notes
 app.get('/notes', (req, res) => {
     res.status(200).json({
         message : "Notes Fetch SuccessFully!",
@@ -24,6 +25,7 @@ app.get('/notes', (req, res) => {
     });
 });
 
+// DELETE /notes/: index[0, 1, 2, 3, .... n]
 app.delete('/notes/:index', (req, res) => {
     const index = req.params.index;
 
@@ -33,5 +35,19 @@ app.delete('/notes/:index', (req, res) => {
         message : "Note Deleted SuccessFully!"
     });
 });
+
+// PATCH /notes/: index[0, 1, 2, 3, 4, ...., n] Update karne ke liye!
+
+app.patch('/notes/:index', (req, res) => {
+    const index = req.params.index;
+    const description = req.body.description;
+    // Update Description!
+    notes [index].description = description;
+
+    res.status(200).json({
+        message : "Note Updated SuccessFUlly!"
+    });
+
+})
 
 module.exports = app;
